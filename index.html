@@ -113,6 +113,14 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}th,td{white
 footer .w{gap:18px}
 .g2,.g3{grid-template-columns:1fr!important}.g2>*,.g3>*,.g4>*,.main>*{min-width:0}
 }
+
+/* bigger bar, hides on scroll */
+.demo{position:sticky!important;top:0;font-size:13.5px;padding:9px 14px;gap:10px;transition:transform .25s ease;will-change:transform}
+.demo.hide{transform:translateY(-110%)}
+.demo>b{font-size:13px;padding:4px 10px}
+.demo nav{gap:6px}.demo nav button{padding:8px 14px;font-size:13.5px;border-radius:8px}
+#langSel{font-size:13.5px!important;padding:7px 10px!important}
+.pub header{top:var(--dh,0px);transition:top .25s ease}
 </style>
 </head>
 <body>
@@ -632,5 +640,6 @@ function setLang(l){if(l=="__")return;LANG=l;try{localStorage.setItem("umlang",l
 
 show(VIEW);$("langSel").value=LANG;document.documentElement.lang={en:"en",fr:"fr-CH",it:"it-CH",gsw:"gsw",de:"de-CH"}[LANG]||"de-CH";translateDOM(document.body);
 </script>
+<script>(()=>{const b=document.querySelector('.demo');let y=scrollY;const set=()=>document.documentElement.style.setProperty('--dh',b.classList.contains('hide')?'0px':b.offsetHeight+'px');addEventListener('scroll',()=>{const n=scrollY;if(n>y+4&&n>90)b.classList.add('hide');else if(n<y-4||n<40)b.classList.remove('hide');y=n;set()},{passive:true});addEventListener('resize',set);set()})();</script>
 </body>
 </html>
