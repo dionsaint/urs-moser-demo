@@ -498,7 +498,7 @@ function pIssue(){const p=$("pmL").value,t=$("pmD").value.trim();if(!p)return to
 /* ================= EMPLOYEE ================= */
 let ET="today",EJ=null;const ME="S3";
 function rEmp(){const mine=D.jobs.filter(j=>j.staff.includes(ME)&&!["Verrechnet","Abgeschlossen"].includes(j.st)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));let h="";
- if(EJ){const j=D.jobs.find(x=>x.no==EJ);const p=D.properties.find(p=>j.addr.startsWith(p.a));h=`<button class="btn g s" onclick="EJ=null;rEmp()">← Zurück</button><h2 style="margin:12px 0 4px;font-size:19px">${j.t}</h2><div class="mut">${j.addr}</div>${tg(j.st)}
+ if(EJ&&!D.jobs.find(x=>x.no==EJ))EJ=null;if(EJ){const j=D.jobs.find(x=>x.no==EJ);const p=D.properties.find(p=>j.addr.startsWith(p.a));h=`<button class="btn g s" onclick="EJ=null;rEmp()">← Zurück</button><h2 style="margin:12px 0 4px;font-size:19px">${j.t}</h2><div class="mut">${j.addr}</div>${tg(j.st)}
   <div class="row" style="margin:12px 0"><a class="btn g s" href="https://maps.google.com/?q=${encodeURIComponent(j.addr)}" target="_blank">🧭 Navigation</a><span class="btn g s" title="tel">📞 ${cust(j.c).tel||"–"}</span></div>
   ${p?`<div class="card sm" style="padding:10px"><b>Zugang:</b> ${p.access}</div>`:""}
   <div class="row" style="margin:12px 0">${j.st=="Zugewiesen"||j.st=="Geplant"?`<button class="btn" style="flex:1" onclick="eIn('${j.no}')">▶ Check-in</button>`:j.st=="In Arbeit"?`<button class="btn g" style="flex:1" onclick="toast('Pause gestartet (Demo)')">⏸ Pause</button>`:""}</div>
