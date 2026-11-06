@@ -152,6 +152,16 @@ footer .w{gap:18px}
 .rv:not(.in){transition:opacity .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms),transform .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms)}.rv.in.scard,.rv.in.card,.rv.in.step{transition:opacity .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms),transform .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms),box-shadow .3s}.rv.in:hover{transition-delay:0ms}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.hero h1{color:var(--ink);background:none}}
 .ez{background:#fff8e6;border:1px solid #f1dfae;border-radius:12px;padding:11px 13px;margin:0 0 12px;font-size:13.5px;line-height:1.55;color:#4a3d16}.ez b{color:#7a5a0c}
+#gt{position:fixed;left:0;right:0;bottom:0;z-index:90;display:none;justify-content:center;padding:14px;pointer-events:none}#gt.on{display:flex}
+.gt-in{pointer-events:auto;background:#17201b;color:#fff;border-radius:18px;padding:20px 22px;max-width:580px;width:100%;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.gt-top{display:flex;justify-content:space-between;align-items:center}.gt-n{color:#e0b341;font-weight:700;font-size:13px}
+.gt-x{background:none;border:0;color:#9aa59e;font-size:18px;padding:4px 8px}
+.gt-in h3{font-size:21px;margin:4px 0 8px}.gt-in p{font-size:16.5px;line-height:1.55;color:#dfe6e1;margin:0}
+.gt-dots{display:flex;gap:5px;margin:16px 0 14px}.gt-dots i{flex:1;height:4px;border-radius:4px;background:#34403a}.gt-dots i.on{background:#e0b341}
+.gt-b{display:flex;gap:10px}.gt-b button{flex:1;border:0;border-radius:12px;padding:15px 12px;font-size:17px;font-weight:700}
+.gt-g{background:#e0b341;color:#17201b}.gt-s{background:#2c3630;color:#fff}
+body:has(#gt.on) .chatb{display:none}
+@media(max-width:600px){#gt{padding:8px}.gt-in{padding:16px}.gt-in h3{font-size:19px}.gt-in p{font-size:16px}}
 </style>
 </head>
 <body>
@@ -678,5 +688,35 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 const SEL='.scard,.card,.step,.faq details,.sec h2,.sec .lead,.ph';const SCOPE='#v-feat,#v-pub,#v-portal';
 const tag=root=>{if(!root.querySelectorAll)return;root.querySelectorAll(SEL).forEach(el=>{if(el.classList.contains('rv')||!el.closest(SCOPE)||el.closest('.chat,.hero'))return;const sib=[...el.parentNode.children].filter(c=>c.matches(SEL));el.style.setProperty('--d',Math.min(sib.indexOf(el),6)*90+'ms');el.classList.add('rv');io.observe(el)})};
 tag(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType==1)tag(n.parentNode||n)}))).observe(document.body,{childList:true,subtree:true});})();</script>
+<script>(()=>{
+const T=[
+{de:["👋 Willkommen!","Das ist ein Beispiel, wie Ihre Firma mit einem einfachen Programm arbeiten könnte. Alles ist erfunden, Sie können nichts kaputt machen.\n\nDie Tour dauert etwa 2 Minuten. Sie drücken einfach immer auf «Weiter»."],en:["👋 Welcome!","This is an example of how your company could work with one simple program. Everything is made up, you can't break anything.\n\nThe tour takes about 2 minutes. Just keep pressing “Next”."],go:()=>{show('feat')}},
+{de:["1. Ihre neue Website","So sieht Ihre Firma im Internet aus. Wer auf Google nach Reinigung in Biel sucht, findet Sie und sieht sofort alle Ihre Dienstleistungen."],en:["1. Your new website","This is how your company looks online. Anyone searching Google for cleaning in Biel finds you and sees all your services right away."],go:()=>{show('pub')}},
+{de:["2. Ein Kunde fragt an","Frau Muster zieht um und braucht eine Wohnungsreinigung. Statt anzurufen, füllt sie auf dem Handy ein paar Fragen aus, wie ein Bestellzettel."],en:["2. A customer asks","Ms Muster is moving and needs her flat cleaned. Instead of calling, she answers a few questions on her phone, like an order slip."],go:()=>{W={s:3,d:{svc:'wohnung',ct:'Mieter',str:'Bahnhofstrasse 5',plz:'2502 Biel',bt:'Wohnung',zi:'3.5',m2:'78',bad:'1',fen:'7',bal:true,kue:true}};show('wiz')}},
+{de:["3. Anfrage ist da","Fertig! Frau Muster bekommt eine Nummer und kann jederzeit nachschauen, wie es weitergeht. Sie müssen nichts abtippen."],en:["3. Request received","Done! Ms Muster gets a reference number and can check the status any time. You don't have to type anything."],go:()=>{W={s:6,d:{svc:'wohnung',ct:'Mieter',str:'Bahnhofstrasse 5',plz:'2502 Biel',bt:'Wohnung',zi:'3.5',m2:'78',bad:'1',fen:'7',bal:true,kue:true,name:'Anna Muster',email:'anna.muster@example.ch',tel:'079 555 11 22',consent:true}};show('wiz');wNav(1);TR.ref=D.leads[0].ref}},
+{de:["4. Im Büro","Hier sehen Sie alle Anfragen, wie Zettel an einer Pinnwand. Die neue Anfrage von Frau Muster steht ganz links bei «Neu»."],en:["4. In the office","Here you see all requests, like notes on a pinboard. Ms Muster's new request is on the far left under “New”."],go:()=>{ANAV='leads';show('adm')}},
+{de:["5. Offerte in Sekunden","Ein Klick, und das Programm schreibt Ihnen die Offerte vor. Die Preise kommen aus Ihrer eigenen Preisliste. Sie lesen, ändern was Sie wollen, fertig."],en:["5. Quote in seconds","One click and the program drafts the quote for you. Prices come from your own price list. You read it, change what you want, done."],go:()=>{ANAV='leads';show('adm');aiQuote(TR.ref);TR.q=D.quotes[0].no}},
+{de:["6. Kunde sagt Ja","Sie schicken die Offerte ab. So sieht es Frau Muster auf ihrem Handy. Mit einem Klick nimmt sie an."],en:["6. Customer says yes","You send the quote. This is what Ms Muster sees on her phone. One click and she accepts."],go:()=>{ANAV='offerten';show('adm');qApprove(TR.q);qSend(TR.q);trackLead(TR.ref)}},
+{de:["7. Auftrag entsteht","Frau Muster hat angenommen. Daraus wird automatisch ein Auftrag. Sie teilen nur noch ein, wer hingeht, hier Marco."],en:["7. A job is created","Ms Muster accepted. A job is created automatically. You only choose who goes, here Marco."],go:()=>{ANAV='auftraege';show('adm');acceptQ(TR.q);const j=D.jobs[D.jobs.length-1];TR.job=j.no;TR.c=j.c;j.date='2026-11-06';j.time='16:00';jStaff(j.no,'S3',true)}},
+{de:["8. Marcos Handy","Marco sieht den Einsatz sofort auf seinem Handy: Adresse, Wegbeschreibung und was zu tun ist. Keine Telefonate, kein Zettel."],en:["8. Marco's phone","Marco sees the job straight away on his phone: address, directions and what to do. No calls, no paper."],go:()=>{ET='today';EJ=null;show('emp')}},
+{de:["9. Arbeit vor Ort","Vor Ort hakt Marco ab, was erledigt ist, und kann Fotos machen. Wenn er fertig ist, drückt er einen Knopf und Sie haben den Bericht."],en:["9. Work on site","On site Marco ticks off what's done and can take photos. When finished he presses one button and you have the report."],go:()=>{eIn(TR.job);const j=D.jobs.find(x=>x.no==TR.job);j.cl.forEach(c=>c[1]=1);j.report='Alles gereinigt. Backofen stark verschmutzt, 20 Min. länger.';EJ=TR.job;show('emp');setTimeout(()=>{const s=document.getElementById('esig');if(s)s.checked=true},50)}},
+{de:["10. Rechnung mit einem Klick","Zurück im Büro: kurz kontrollieren, dann erstellt das Programm die Rechnung mit QR-Code. Frau Muster zahlt bequem mit ihrer Banking-App."],en:["10. Invoice in one click","Back in the office: a quick check, then the program creates the invoice with a QR code. Ms Muster pays easily with her banking app."],go:()=>{const j=D.jobs.find(x=>x.no==TR.job);j.st='Qualitätsprüfung';j.log.push('Check-out M. Keller, Rapport gesendet');ANAV='auftraege';show('adm');jQA(TR.job);mkInv(TR.job)}},
+{de:["11. Für Ihre Kunden","Ihre Kunden, zum Beispiel Verwaltungen, können selbst nachschauen: Wann kommt jemand, was wurde gemacht, wo ist die Rechnung. Das spart Ihnen viele Anrufe."],en:["11. For your customers","Your customers, like property managers, can check for themselves: when someone's coming, what was done, where the invoice is. That saves you lots of calls."],go:()=>{PC='C1';PT='home';show('portal')}},
+{de:["✅ Das war's!","Von der Anfrage bis zur Rechnung, alles an einem Ort, ohne Papier und mit viel weniger Telefon.\n\nAuf dieser Seite sehen Sie alle Funktionen nochmals einfach erklärt. Sie können auch selbst herumklicken."],en:["✅ That's it!","From request to invoice, all in one place, without paper and with far fewer phone calls.\n\nThis page explains all features again in simple words. You can also click around yourself."],go:()=>{show('feat')}}];
+const TR={};let i=-1;const snaps=[];
+const box=document.createElement('div');box.id='gt';document.body.appendChild(box);
+function txt(s){return LANG=="de"||LANG=="gsw"?s.de:s.en}
+function draw(){const s=T[i],t=txt(s),last=i==T.length-1,first=i==0;
+ box.innerHTML=`<div class="gt-in"><div class="gt-top"><span class="gt-n">${first?"":L2("Schritt","Step")+" "+i+" / "+(T.length-2)}</span><button class="gt-x" onclick="gtClose()">✕</button></div><h3>${t[0]}</h3><p>${t[1].replace(/\n/g,"<br>")}</p><div class="gt-dots">${T.map((_,k)=>`<i class="${k<=i?"on":""}"></i>`).join("")}</div><div class="gt-b">${first?`<button class="gt-s" onclick="gtClose()">${L2("Selbst anschauen","Explore myself")}</button><button class="gt-g" onclick="gtNext()">▶ ${L2("Tour starten","Start tour")}</button>`:last?`<button class="gt-s" onclick="gtGo(0)">↺ ${L2("Nochmals","Again")}</button><button class="gt-g" onclick="gtClose()">${L2("Fertig","Done")}</button>`:`<button class="gt-s" onclick="gtBack()">← ${L2("Zurück","Back")}</button><button class="gt-g" onclick="gtNext()">${L2("Weiter","Next")} →</button>`}</div></div>`;
+ box.className='on';box.querySelector('.gt-in').animate?.([{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'none'}],{duration:350,easing:'cubic-bezier(.2,.7,.2,1)'})}
+function run(k){i=k;try{T[k].go()}catch(e){console.warn('tour',e)}window.scrollTo({top:0,behavior:'smooth'});draw()}
+window.gtNext=()=>{snaps[i+1]=JSON.stringify({D,TR});run(i+1)};
+window.gtBack=()=>{if(i<1)return;const s=JSON.parse(snaps[i-1]||snaps[i]);D=s.D;Object.assign(TR,s.TR);run(i-1)};
+window.gtGo=k=>{if(k==0){resetDemo();snaps.length=0}snaps[k]=JSON.stringify({D,TR});run(k)};
+window.gtClose=()=>{box.className='';try{localStorage.setItem('umtour','1')}catch(e){}};
+window.tour=()=>gtGo(0);
+setTimeout(()=>{let seen=0;try{seen=localStorage.getItem('umtour')}catch(e){}if(!seen){snaps[0]=JSON.stringify({D,TR});run(0)}},900);
+})();
+</script>
 </body>
 </html>
