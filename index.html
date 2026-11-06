@@ -89,10 +89,33 @@ footer{background:#17201b;color:#b8c2bb;padding:44px 0;font-size:13px}footer b{c
 .phone .pc{flex:1;padding:16px;overflow:auto}.phone .bn{display:flex;border-top:1px solid var(--line);background:var(--card)}.phone .bn button{flex:1;border:0;background:none;padding:10px 0;font-size:11px;color:var(--mut)}.phone .bn button.on{color:var(--acc);font-weight:700}
 .li{display:flex;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.li input{width:auto}
 .photo{width:64px;height:64px;border-radius:8px;object-fit:cover;background:var(--acc2);display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:var(--mut);margin:4px 4px 0 0}
+
+/* compact demo bar + mobile */
+.demo{position:relative;padding:5px 10px;gap:8px;flex-wrap:nowrap;font-size:11.5px}
+.demo .dtxt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.75;min-width:0}
+.demo nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;min-width:0}
+.demo nav::-webkit-scrollbar{display:none}.demo nav>*{flex-shrink:0}
+.pub header{top:0}.drawer{top:0;z-index:55}.ov{z-index:54}.adm{min-height:100vh}
+@media(max-width:800px){
+.demo .dtxt{display:none}.demo nav{margin-left:0}
+input,select,textarea{font-size:16px}
+.hero{padding:40px 0 30px}.hero p{font-size:16px}.sec{padding:44px 0}.sec h2{font-size:25px}
+.pub .top{height:58px}.pub .top .btn{padding:8px 12px;font-size:13px}.logo{font-size:14px}
+.trust{gap:10px 18px;margin-top:28px}
+.g4{grid-template-columns:1fr 1fr}.stat b{font-size:19px}
+table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}th,td{white-space:nowrap}
+.cal{overflow-x:auto;grid-template-columns:56px repeat(5,150px)}
+.drawer{padding:16px}.main{padding:14px}
+.phone{border:0;border-radius:0;margin:0;min-height:calc(100vh - 34px);max-width:none}
+.wiz{margin-top:16px}.opts{grid-template-columns:1fr}
+.chat{right:10px;left:10px;width:auto;bottom:74px;height:70vh}.chatb{right:12px;bottom:12px}
+.pipe{grid-template-columns:repeat(5,78vw)}
+footer .w{gap:18px}
+}
 </style>
 </head>
 <body>
-<div class="demo"><b>DEMO</b><span><b style="background:none;color:#e0b341;padding:0">Konzept-Vorschlag von Dion</b>, nicht die offizielle Website von Urs Moser Allround-Service.</span><span>Alle Kunden, Adressen, Preise und Zahlen sind fiktiv. Es werden keine E-Mails oder Zahlungen versendet.</span>
+<div class="demo"><b title="Konzept-Vorschlag von Dion, nicht die offizielle Website von Urs Moser Allround-Service. Alle Daten sind fiktiv; es werden keine E-Mails oder Zahlungen versendet.">DEMO</b><span class="dtxt">Konzept von Dion · fiktive Daten</span>
 <nav id="topnav">
 <button data-v="feat" style="background:#e0b341;color:#1c2420;font-weight:700">📋 Funktionen</button><button data-v="pub">Website</button><button data-v="wiz">Offerte anfragen</button><button data-v="adm">Admin</button><button data-v="portal">Kundenportal</button><button data-v="emp">Mitarbeiter</button><button onclick="tour()" style="background:#e0b341;color:#1c2420">▶ Tour</button><button onclick="resetDemo()">↺ Reset</button><select id="langSel" onchange="setLang(this.value)" style="width:auto;padding:4px 8px;font-size:12px;background:#2c3630;color:#fff;border:0;border-radius:6px"><option value="de">🇨🇭 Deutsch</option><option value="gsw">🇨🇭 Schwiizerdütsch</option><option value="fr">🇨🇭 Français</option><option value="it">🇨🇭 Italiano</option><option value="en">🇬🇧 English</option></select>
 </nav></div>
@@ -530,7 +553,7 @@ const HELP={dash:["Ihr Tagesüberblick: was heute läuft und was Aufmerksamkeit 
 let LANG=(()=>{try{return localStorage.getItem("umlang")||"de"}catch(e){return"de"}})();
 const EN={
 "Alle Kunden, Adressen, Preise und Zahlen sind fiktiv. Es werden keine E-Mails oder Zahlungen versendet.":"All customers, addresses, prices and figures are fictional. No emails or payments are sent.",
-"Website":"Website","📋 Funktionen":"📋 Features","Offerte anfragen":"Request a quote","Admin":"Admin","Kundenportal":"Customer portal","Mitarbeiter":"Staff","▶ Tour":"▶ Tour","↺ Reset":"↺ Reset",
+"Website":"Website","Konzept von Dion · fiktive Daten":"Concept by Dion · sample data","📋 Funktionen":"📋 Features","Offerte anfragen":"Request a quote","Admin":"Admin","Kundenportal":"Customer portal","Mitarbeiter":"Staff","▶ Tour":"▶ Tour","↺ Reset":"↺ Reset",
 "Dienstleistungen":"Services","Für Immobilienverwaltungen":"For property managers","Über uns":"About us","Referenzen":"References","Kontakt":"Contact",
 "Region Bern · Biel · Solothurn":"Bern · Biel · Solothurn region",
 "Alles rund um Ihre Liegenschaft. Einfach organisiert.":"Everything for your property. Simply organised.",
