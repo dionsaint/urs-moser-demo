@@ -123,6 +123,34 @@ footer .w{gap:18px}
 .pub header{top:var(--dh,0px);transition:top .25s ease}
 .demo{flex-wrap:wrap!important}.demo nav{flex-wrap:wrap!important;overflow:visible!important;justify-content:flex-start}
 @media(max-width:800px){.demo{padding:8px 10px}.demo nav{width:100%;margin-left:0!important}.demo nav button{padding:7px 11px;font-size:13px}}
+
+/* ===== motion ===== */
+@keyframes heroIn{from{opacity:0;transform:translateY(26px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes viewIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes floatA{from{transform:translate(0,0) scale(1)}to{transform:translate(-90px,70px) scale(1.15)}}
+@keyframes floatB{from{transform:translate(0,0)}to{transform:translate(80px,-50px)}}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes shine{from{background-position:-200% 0}to{background-position:200% 0}}
+.view.on{animation:viewIn .5s cubic-bezier(.2,.7,.2,1)}
+.hero{position:relative;overflow:hidden}.hero .w{position:relative;z-index:1}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero:before{width:620px;height:620px;right:-180px;top:-240px;background:radial-gradient(circle,rgba(47,107,58,.16),transparent 65%);animation:floatA 14s ease-in-out infinite alternate}
+.hero:after{width:460px;height:460px;left:-160px;bottom:-260px;background:radial-gradient(circle,rgba(224,179,65,.14),transparent 65%);animation:floatB 17s ease-in-out infinite alternate}
+.hero .tag,.hero h1,.hero p,.hero .row,.hero .trust,#fmain>.tag,#fmain>h1,#fmain>p{animation:heroIn .9s cubic-bezier(.2,.7,.2,1) both}
+.hero h1,#fmain>h1{animation-delay:.08s}.hero p,#fmain>p{animation-delay:.2s}.hero .row{animation-delay:.32s}.hero .trust{animation-delay:.44s}
+.hero h1{background:linear-gradient(90deg,var(--ink) 0%,var(--ink) 40%,var(--acc) 50%,var(--ink) 60%,var(--ink) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:heroIn .9s .08s cubic-bezier(.2,.7,.2,1) both,shine 6s 1.2s ease-in-out infinite}
+.rv{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms)}
+.rv.in{opacity:1;transform:none}
+.scard,.card,.kc,.opt,.step{transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s,opacity .75s cubic-bezier(.2,.7,.2,1)}
+.scard:hover,.card.stat:hover,.kc:hover,#fmain .card:hover,.opt:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(23,32,27,.11)}
+.scard .ic{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}.scard:hover .ic{transform:scale(1.15) rotate(-7deg)}
+.btn{transition:transform .15s,box-shadow .25s,filter .2s}.btn:hover{filter:brightness(1.07);box-shadow:0 6px 16px rgba(47,107,58,.22)}.btn:active{transform:scale(.96)}
+.chat.on,.cmd.on .card,.modal.on .card{animation:pop .35s cubic-bezier(.2,.7,.2,1)}
+.drawer.on>*{animation:viewIn .45s .05s cubic-bezier(.2,.7,.2,1) both}
+.prog div{transition:background .5s}
+.toast{animation:pop .3s}
+.rv:not(.in){transition:opacity .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms),transform .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms)}.rv.in.scard,.rv.in.card,.rv.in.step{transition:opacity .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms),transform .75s cubic-bezier(.2,.7,.2,1) var(--d,0ms),box-shadow .3s}.rv.in:hover{transition-delay:0ms}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.hero h1{color:var(--ink);background:none}}
 </style>
 </head>
 <body>
@@ -643,5 +671,10 @@ function setLang(l){if(l=="__")return;LANG=l;try{localStorage.setItem("umlang",l
 show(VIEW);$("langSel").value=LANG;document.documentElement.lang={en:"en",fr:"fr-CH",it:"it-CH",gsw:"gsw",de:"de-CH"}[LANG]||"de-CH";translateDOM(document.body);
 </script>
 <script>(()=>{const b=document.querySelector('.demo');let y=scrollY;const set=()=>document.documentElement.style.setProperty('--dh',b.classList.contains('hide')?'0px':b.offsetHeight+'px');addEventListener('scroll',()=>{const n=scrollY;if(n>y+4&&n>90)b.classList.add('hide');else if(n<y-4||n<40)b.classList.remove('hide');y=n;set()},{passive:true});addEventListener('resize',set);set()})();</script>
+<script>(()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver'in window))return;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.06,rootMargin:'0px 0px -24px 0px'});
+const SEL='.scard,.card,.step,.faq details,.sec h2,.sec .lead,.ph';const SCOPE='#v-feat,#v-pub,#v-portal';
+const tag=root=>{if(!root.querySelectorAll)return;root.querySelectorAll(SEL).forEach(el=>{if(el.classList.contains('rv')||!el.closest(SCOPE)||el.closest('.chat,.hero'))return;const sib=[...el.parentNode.children].filter(c=>c.matches(SEL));el.style.setProperty('--d',Math.min(sib.indexOf(el),6)*90+'ms');el.classList.add('rv');io.observe(el)})};
+tag(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType==1)tag(n.parentNode||n)}))).observe(document.body,{childList:true,subtree:true});})();</script>
 </body>
 </html>
