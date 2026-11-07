@@ -166,7 +166,8 @@ body:has(#gt.on) .chatb{display:none}
 @media(max-width:600px){#gt{padding:8px}.gt-in{padding:16px}.gt-in h3{font-size:19px}.gt-in p{font-size:16px}}
 </style>
 <link rel="stylesheet" href="refresh.css">
-<link rel="stylesheet" href="learning.css?v=20261107-2">
+<link rel="stylesheet" href="learning.css?v=20261107-3">
+<link rel="stylesheet" href="ai-learning.css?v=20261107-3">
 </head>
 <body>
 <a class="skip-link" href="#v-feat">Zum Inhalt</a>
@@ -179,7 +180,7 @@ body:has(#gt.on) .chatb{display:none}
       <button data-v="features">Funktionen</button>
       <button class="nav-guide" data-v="anleitung">Anleitung</button>
       <details class="nav-menu"><summary>Bereiche <span aria-hidden="true">⌄</span></summary><div class="menu-panel">
-        <button data-v="pub">Website für Kunden</button><button data-v="wiz">Anfrage ausprobieren</button><button data-v="adm">Büro &amp; Planung</button><button data-v="portal">Bereich für Kunden</button><button data-v="emp">Handy der Mitarbeitenden</button>
+        <button data-v="ki">KI-Funktionen kennenlernen</button><button data-v="empfang">Telefonempfang ausprobieren</button><button data-v="pub">Website für Kunden</button><button data-v="wiz">Anfrage ausprobieren</button><button data-v="adm">Büro &amp; Planung</button><button data-v="portal">Bereich für Kunden</button><button data-v="emp">Handy der Mitarbeitenden</button>
       </div></details>
       <details class="nav-menu settings-menu"><summary aria-label="Sprache und Demo-Einstellungen">•••</summary><div class="menu-panel">
         <label for="langSel">Sprache</label><select id="langSel" onchange="setLang(this.value)"><option value="de">Deutsch (Schweiz)</option><option value="gsw">Schwiizerdütsch</option><option value="fr">Français</option><option value="it">Italiano</option><option value="en">English</option></select>
@@ -191,6 +192,8 @@ body:has(#gt.on) .chatb{display:none}
 <div id="view-context" class="view-context" hidden></div>
 <section class="view" id="v-features" aria-label="Funktionen"><div class="w learning-page" id="features-root"></div></section>
 <section class="view" id="v-anleitung" aria-label="Anleitung"><div class="w learning-page" id="tutorial-root"></div></section>
+<section class="view" id="v-ki" aria-label="KI-Funktionen"><div class="w learning-page" id="ai-root"></div></section>
+<section class="view" id="v-empfang" aria-label="Telefonempfang"><div class="w learning-page" id="reception-root"></div></section>
 <section class="view" id="v-guide" aria-label="Geführtes Beispiel"><div class="w" id="guide-root"></div></section>
 
 <section class="view" id="v-feat"><div class="w" style="padding-top:34px;padding-bottom:70px" id="fmain"></div></section>
@@ -389,8 +392,8 @@ A.leads=()=>H("Anfragen & Kunden","So weit ist jede Anfrage: neu, in Prüfung, O
  <h3 style="margin:26px 0 10px">Kunden</h3><div class="card" style="padding:0 8px"><table><tr><th>Kunde</th><th>Typ</th><th>Kontakt</th><th>Liegenschaften</th><th>Offen</th></tr>${D.customers.map(c=>`<tr class="click" onclick="custD('${c.id}')"><td><b>${c.n}</b></td><td>${c.t}</td><td>${c.c}<div class="mut sm">${c.tel}</div></td><td>${D.properties.filter(p=>p.c==c.id).length}</td><td>${chf(D.invoices.filter(i=>i.c==c.id&&i.st!="Bezahlt").reduce((a,i)=>a+totals(i.lines).tot-i.paid,0))}</td></tr>`).join("")}</table></div>`;
 function leadD(ref){const L=D.leads.find(l=>l.ref==ref);const q=D.quotes.find(q=>q.lead==ref);
  openD(`<div class="mut sm">${L.ref} · eingegangen ${dt(L.d)}</div><h2 style="margin:4px 0 6px">${esc(L.n)}</h2>${tg(L.st)} <span class="tag t0">${L.ct}</span>
- <table style="margin-top:14px">${[["Dienstleistung",SVC(L.svc)],["Adresse",L.addr],["Kontakt",L.e+" · "+L.tel],["Details",Object.entries(L.det).filter(([k,v])=>!["svc","ct","name","email","tel","consent","str","plz"].includes(k)&&v!==""&&v!==false).map(([k,v])=>k+": "+v).join(" · ")]].map(r=>`<tr><td class="mut" style="width:120px">${r[0]}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>
- <div class="ai" style="margin-top:14px"><div class="h">✨ KI-ZUSAMMENFASSUNG (Demo, simuliert)</div><p style="margin:6px 0">${SVC(L.svc)} für ${L.ct.toLowerCase()} in ${esc(L.addr.split(",").pop())}. ${L.det.urg=="Hoch"||L.det.urg=="Notfall"?"<b>Dringend</b>, Rückruf heute empfohlen. ":""}${L.det.photos?"":"Keine Fotos vorhanden. "}${L.svc=="technik"?"Technische Störung → Besichtigung vor Offerte empfohlen.":"Genug Angaben für einen Offertentwurf."}</p><div class="sm mut">Quelle: Anfrage ${L.ref}</div></div>
+ <table style="margin-top:14px">${[["Dienstleistung",SVC(L.svc)],["Adresse",L.addr],["Kontakt",[L.e,L.tel].filter(Boolean).join(" · ")],["Details",Object.entries(L.det).filter(([k,v])=>!["svc","ct","name","email","tel","consent","str","plz"].includes(k)&&v!==""&&v!==false).map(([k,v])=>({zi:"Zimmer",m2:"Fläche (m²)",date:"Wunschtermin",note:"Notiz"}[k]||k)+": "+v).join(" · ")]].map(r=>`<tr><td class="mut" style="width:120px">${r[0]}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>
+ <div class="ai" style="margin-top:14px"><div class="h">✨ KI-ZUSAMMENFASSUNG (Demo, simuliert)</div><p style="margin:6px 0">${SVC(L.svc)} für ${L.ct.toLowerCase()} in ${esc(L.addr.split(",").pop())}. ${L.det.urg=="Hoch"||L.det.urg=="Notfall"?"<b>Dringend</b>, Rückruf heute empfohlen. ":""}${L.det.photos?"":"Keine Fotos vorhanden. "}${L.det.note?.startsWith("Gesprächsdemo Telefonempfang")?"Rückmeldung nötig: Adresse, Leistungsumfang und Termin mit der Kundin klären.":L.svc=="technik"?"Technische Störung → Besichtigung vor Offerte empfohlen.":"Genug Angaben für einen Offertentwurf."}</p><div class="sm mut">Quelle: Anfrage ${L.ref}</div></div>
  <label>Status ändern</label><select onchange="setLead('${ref}',this.value)">${LST.concat("Abgelehnt").map(s=>`<option ${s==L.st?"selected":""}>${s}</option>`).join("")}</select>
  <div class="row" style="margin-top:16px">${q?`<button class="btn" onclick="quoteD('${q.no}')">Offerte ${q.no} öffnen</button>`:`<button class="btn" onclick="aiQuote('${ref}')">Offerte vorbereiten</button><button class="btn g" onclick="setLead('${ref}','Besichtigung');toast('Besichtigung angefragt')">Besichtigung planen</button>`}<button class="btn g" onclick="trackLead('${ref}')">Kundensicht</button></div>`)}
 function setLead(ref,s){D.leads.find(l=>l.ref==ref).st=s;logA(`Anfrage ${ref} → Status „${s}“ (U. Moser)`);render();leadD(ref)}
@@ -720,6 +723,7 @@ const SEL='.scard,.card,.step,.faq details,.sec h2,.sec .lead,.ph';const SCOPE='
 const tag=root=>{if(!root.querySelectorAll)return;root.querySelectorAll(SEL).forEach(el=>{if(el.classList.contains('rv')||!el.closest(SCOPE)||el.closest('.chat,.hero'))return;const sib=[...el.parentNode.children].filter(c=>c.matches(SEL));el.style.setProperty('--d',Math.min(sib.indexOf(el),6)*90+'ms');el.classList.add('rv');io.observe(el)})};
 tag(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType==1)tag(n.parentNode||n)}))).observe(document.body,{childList:true,subtree:true});})();</script>
 
-<script src="experience.js?v=20261107-2"></script>
+<script src="ai-experience.js?v=20261107-3"></script>
+<script src="experience.js?v=20261107-3"></script>
 </body>
 </html>
