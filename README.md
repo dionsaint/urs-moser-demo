@@ -6,6 +6,8 @@ A browser-only sales demonstration for Urs Moser Allround-Service. All business 
 
 - Demo introduction: `https://dionsaint.github.io/urs-moser-demo/#feat`
 - Customer homepage: `https://dionsaint.github.io/urs-moser-demo/#pub`
+- Feature overview: `https://dionsaint.github.io/urs-moser-demo/#features`
+- Tutorial introduction: `https://dionsaint.github.io/urs-moser-demo/#anleitung`
 - Guided example: `https://dionsaint.github.io/urs-moser-demo/#guide`
 
 The guided example creates linked enquiry, quote, job and invoice records in the existing local demo. It keeps progress in browser storage and reuses completed records when replayed. Resetting the demo clears that progress.
@@ -19,9 +21,10 @@ Run `python3 -m http.server 8765 --bind 127.0.0.1` in this directory and open `h
 - `index.html`: existing interactive office, enquiry, customer and staff functionality.
 - `experience.js`: refreshed introduction and customer homepage, six-step example, navigation and form improvements.
 - `refresh.css`: responsive visual system and accessibility improvements.
+- `learning.css`: feature overview, tutorial instructions and compact mobile navigation.
 - `assets/`: generated illustrative photographs, with 700 px and 1400 px versions.
 
-The visual refresh retains the original green identity and German default. The existing language selector remains; the refreshed experience is authored in German and English. French and Italian retain the original partial translation coverage and core navigation translations. They are not complete translations of the new presentation.
+The visual refresh retains the original green identity. Links without a language parameter always open in Swiss Standard German (`de-CH`), regardless of older saved language preferences. An explicit alternative language uses a URL parameter such as `?lang=en`. Laura Moser is the fictional tutorial customer and appears in a sample enquiry. Visible Funktionen and Anleitung navigation opens the feature overview and a beginner tutorial, with a next-action explanation at every step. The existing language selector remains; the refreshed experience is authored in German and English. French and Italian retain the original partial translation coverage and core navigation translations. They are not complete translations of the new presentation.
 
 ## Validation, 7 November 2026
 
@@ -32,6 +35,7 @@ The visual refresh retains the original green identity and German default. The e
 - Seven-step enquiry tested with sample data, invalid email and successful submission. Completion no longer displays “Step 8 of 7 · undefined”.
 - Desktop, 390 px and 320 px widths inspected. No page overflow at the inspected phone widths; smaller image variants loaded.
 - Menu, German/English switching and service-help response tested. No browser errors observed.
+- Funktionen links, Anleitung entry, per-step instructions and Laura Moser sample records checked. The plain URL returns to German after selecting English.
 
 This validation covers the changed experience and key existing paths. It is not certification of the legacy demo's accounting, security, translations or production readiness.
 

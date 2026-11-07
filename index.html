@@ -166,6 +166,7 @@ body:has(#gt.on) .chatb{display:none}
 @media(max-width:600px){#gt{padding:8px}.gt-in{padding:16px}.gt-in h3{font-size:19px}.gt-in p{font-size:16px}}
 </style>
 <link rel="stylesheet" href="refresh.css">
+<link rel="stylesheet" href="learning.css">
 </head>
 <body>
 <a class="skip-link" href="#v-feat">Zum Inhalt</a>
@@ -175,18 +176,21 @@ body:has(#gt.on) .chatb{display:none}
     <button class="brand" onclick="show('feat')" aria-label="Urs Moser Demo: Start"><span class="brand-mark" aria-hidden="true">um<span>.</span></span><span>Urs Moser<small>Einfacher arbeiten.</small></span></button>
     <nav id="topnav" aria-label="Demo-Navigation">
       <button data-v="feat">Start</button>
-      <button class="nav-guide" onclick="tour()">Beispiel starten <span aria-hidden="true">→</span></button>
+      <button data-v="features">Funktionen</button>
+      <button class="nav-guide" data-v="anleitung">Anleitung</button>
       <details class="nav-menu"><summary>Bereiche <span aria-hidden="true">⌄</span></summary><div class="menu-panel">
         <button data-v="pub">Website für Kunden</button><button data-v="wiz">Anfrage ausprobieren</button><button data-v="adm">Büro &amp; Planung</button><button data-v="portal">Bereich für Kunden</button><button data-v="emp">Handy der Mitarbeitenden</button>
       </div></details>
       <details class="nav-menu settings-menu"><summary aria-label="Sprache und Demo-Einstellungen">•••</summary><div class="menu-panel">
-        <label for="langSel">Sprache</label><select id="langSel" onchange="setLang(this.value)"><option value="de">Deutsch</option><option value="gsw">Schwiizerdütsch</option><option value="fr">Français</option><option value="it">Italiano</option><option value="en">English</option></select>
+        <label for="langSel">Sprache</label><select id="langSel" onchange="setLang(this.value)"><option value="de">Deutsch (Schweiz)</option><option value="gsw">Schwiizerdütsch</option><option value="fr">Français</option><option value="it">Italiano</option><option value="en">English</option></select>
         <button onclick="resetDemo()">Demo zurücksetzen</button>
       </div></details>
     </nav>
   </div>
 </header>
 <div id="view-context" class="view-context" hidden></div>
+<section class="view" id="v-features" aria-label="Funktionen"><div class="w learning-page" id="features-root"></div></section>
+<section class="view" id="v-anleitung" aria-label="Anleitung"><div class="w learning-page" id="tutorial-root"></div></section>
 <section class="view" id="v-guide" aria-label="Geführtes Beispiel"><div class="w" id="guide-root"></div></section>
 
 <section class="view" id="v-feat"><div class="w" style="padding-top:34px;padding-bottom:70px" id="fmain"></div></section>
@@ -282,7 +286,7 @@ const SEED=()=>({
   {id:"V2",p:"P4",c:"C1",t:"Unterhalt + Tiefgarage",f:"2× wöchentlich",fee:2140,bill:"Pauschal",team:"S4",renew:"2026-12-15",checklist:["Treppenhaus","Waschküche","Tiefgarage wischen","Umgebung"],missed:1},
   {id:"V3",p:"P1",c:"C1",t:"Hauswartung",f:"monatlich",fee:1250,bill:"Pauschal",team:"S1",renew:"2027-06-30",checklist:["Rundgang","Heizung prüfen","Umgebung","Mängel melden"],missed:0}],
  leads:[
-  {ref:"UM-1044",d:"2026-11-05",svc:"wohnung",ct:"Mieter",n:"Laura Meier",e:"laura.meier@example.ch",tel:"078 555 12 34",addr:"Breitenrainstrasse 20, 3013 Bern",det:{zi:"3.5",m2:"82",bad:"1",fen:"9",bal:true,date:"2026-11-28"},st:"Neu",cust:null},
+  {ref:"UM-1044",d:"2026-11-05",svc:"wohnung",ct:"Mieter",n:"Laura Moser",e:"laura.moser@example.com",tel:"078 555 12 34",addr:"Breitenrainstrasse 20, 3013 Bern",det:{zi:"3.5",m2:"82",bad:"1",fen:"9",bal:true,date:"2026-11-28"},st:"Neu",cust:null},
   {ref:"UM-1045",d:"2026-11-06",svc:"technik",ct:"Immobilienverwaltung",n:"Peter Gerber",e:"p.gerber@seeland.example",tel:"032 555 40 40",addr:"Seevorstadt 41, 2502 Biel",det:{issue:"Wärmepumpe meldet Störung E7, Warmwasser lauwarm",urg:"Hoch"},st:"Qualifiziert",cust:"C3"}],
  quotes:[
   {no:"OF-2026030",lead:null,c:"C4",t:"Bodenreinigung Produktionshalle",st:"Gesendet",ver:2,exp:"2026-11-30",ai:false,lines:[{t:"Grundreinigung Industrieboden 420 m²",q:420,u:"m²",p:4.2},{t:"Anfahrt",q:1,u:"Pauschal",p:45}]}],
@@ -627,7 +631,8 @@ ${[1,2,3].map(p=>`<h2 style="margin:30px 0 12px;font-size:19px">${L2(...PHN[p])}
 const HELP={dash:["Ihr Tagesüberblick: was heute läuft und was Aufmerksamkeit braucht. Jede Karte ist anklickbar.","Your daily overview: what's happening today and what needs attention. Every card is clickable."],leads:["Jede Website-Anfrage landet hier. Karte öffnen → KI-Offertentwurf erstellen oder Besichtigung planen.","Every website request lands here. Open a card → create an AI quote draft or schedule a site visit."],offerten:["Offerten prüfen, Positionen anpassen, freigeben und senden. KI-Entwürfe brauchen immer Ihre Freigabe.","Review quotes, edit lines, approve and send. AI drafts always need your approval."],auftraege:["Alle Aufträge mit Status. Öffnen → Team zuweisen, verschieben, Qualität freigeben, Rechnung erstellen.","All jobs with status. Open → assign team, reschedule, approve quality, create invoice."],kalender:["Wochenplan aller Einsätze. Klick auf einen Einsatz zum Verschieben oder Zuweisen.","Weekly plan of all jobs. Click one to reschedule or assign."],liegenschaften:["Gebäude Ihrer Kunden mit Anlagen und Wartungsterminen. Fällige Wartungen erzeugen automatisch Aufträge.","Your customers' buildings with equipment and service dates. Due maintenance creates jobs automatically."],vertraege:["Abo-Kunden: Rhythmus, Pauschale, Team, Marge. Monatsrechnungen mit einem Klick.","Subscription customers: frequency, fee, team, margin. Monthly invoices in one click."],rechnungen:["Rechnungen mit QR-Zahlteil. Zahlungen hier abgleichen; Mahnungen nur nach Freigabe.","Invoices with QR slip. Reconcile payments here; reminders only after approval."],berichte:["Kennzahlen aus Ihren Daten. Keine erfundenen Zahlen.","Key figures from your data. No made-up numbers."],ai:["Fragen Sie in normaler Sprache. Antworten verlinken auf die Datensätze. Kann nichts löschen oder bezahlen.","Ask in plain language. Answers link to records. Cannot delete or pay."],auto:["Was im Hintergrund automatisch passiert, mit Protokoll.","What happens automatically in the background, with a log."],team:["Wer was sehen und tun darf. Neue Personen nur per Einladung.","Who can see and do what. New people by invite only."],einst:["Preisliste, MWST und KI. Die KI nutzt nur diese Preise.","Price list, VAT and AI. The AI uses only these prices."]};
 
 /* ================= I18N (DE/EN) ================= */
-let LANG=(()=>{try{return localStorage.getItem("umlang")||"de"}catch(e){return"de"}})();
+// Shared links open in Swiss Standard German unless a language is explicitly requested.
+let LANG=(()=>{const requested=new URLSearchParams(location.search).get("lang");return ["de","gsw","fr","it","en"].includes(requested)?requested:"de"})();
 const EN={
 "Alle Kunden, Adressen, Preise und Zahlen sind fiktiv. Es werden keine E-Mails oder Zahlungen versendet.":"All customers, addresses, prices and figures are fictional. No emails or payments are sent.",
 "Website":"Website","Konzept von Dion · fiktive Daten":"Concept by Dion · sample data","📋 Funktionen":"📋 Features","Offerte anfragen":"Request a quote","Admin":"Admin","Kundenportal":"Customer portal","Mitarbeiter":"Staff","▶ Tour":"▶ Tour","↺ Reset":"↺ Reset",
@@ -704,7 +709,7 @@ function translateDOM(root){if(LANG=="de"||_tr)return;_tr=true;const w=document.
  root.querySelectorAll("option").forEach(o=>{if(!o.hasAttribute("value"))o.value=o.textContent;const v=tr(o.textContent);if(v!=o.textContent)o.textContent=v});_tr=false}
 const PH={"z. B. Macht ihr Wohnungsabgaben in Biel?":"e.g. Do you do handover cleaning in Biel?","Suchen: Kunden, Anfragen, Offerten, Aufträge, Rechnungen …":"Search: customers, requests, quotes, jobs, invoices …","Frage zu Ihren Geschäftsdaten …":"Ask about your business data …","Nachricht …":"Message …","z. B. Licht im Treppenhaus 2. OG defekt":"e.g. Stairwell light on 2nd floor broken","z. B. Kalk im Bad stark, extra 30 Min.":"e.g. heavy limescale in bathroom, extra 30 min."};Object.assign(EN,PH);
 new MutationObserver(ms=>{if(LANG=="de"||_tr)return;ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType==1)translateDOM(n);else if(n.nodeType==3&&n.parentNode)translateDOM(n.parentNode)}))}).observe(document.body,{childList:true,subtree:true});
-function setLang(l){if(l=="__")return;LANG=l;try{localStorage.setItem("umlang",l)}catch(e){}document.documentElement.lang={en:"en",fr:"fr-CH",it:"it-CH",gsw:"gsw",de:"de-CH"}[l];location.reload();return;translateDOM(document.body)}
+function setLang(l){if(!["de","gsw","fr","it","en"].includes(l))return;const url=new URL(location.href);if(l==="de")url.searchParams.delete("lang");else url.searchParams.set("lang",l);location.href=url.href;}
 
 show(VIEW);$("langSel").value=LANG;document.documentElement.lang={en:"en",fr:"fr-CH",it:"it-CH",gsw:"gsw",de:"de-CH"}[LANG]||"de-CH";translateDOM(document.body);
 </script>
