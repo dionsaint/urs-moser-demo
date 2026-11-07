@@ -328,7 +328,9 @@
     const messages=$('cmsgs');messages.insertAdjacentHTML('beforeend',`<div class="m u">${esc(question)}</div><div class="m a">${answer}<br><button class="text-button" onclick="show('wiz')">${t('Anfrage ausprobieren','Try an enquiry')} →</button></div>`);messages.scrollTop=messages.scrollHeight;
   };
 
+  const routes=['feat','features','anleitung','pub','guide','wiz','adm','portal','emp'];
   const initialView=location.hash.slice(1);
-  show(['feat','features','anleitung','pub','guide','wiz','adm','portal','emp'].includes(initialView)?initialView:'feat');
+  show(routes.includes(initialView)?initialView:'feat');
+  window.addEventListener('hashchange',()=>{const route=location.hash.slice(1);if(routes.includes(route)&&route!==VIEW)show(route);});
   translateDOM(document.body);
 })();

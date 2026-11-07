@@ -166,7 +166,7 @@ body:has(#gt.on) .chatb{display:none}
 @media(max-width:600px){#gt{padding:8px}.gt-in{padding:16px}.gt-in h3{font-size:19px}.gt-in p{font-size:16px}}
 </style>
 <link rel="stylesheet" href="refresh.css">
-<link rel="stylesheet" href="learning.css">
+<link rel="stylesheet" href="learning.css?v=20261107-2">
 </head>
 <body>
 <a class="skip-link" href="#v-feat">Zum Inhalt</a>
@@ -720,6 +720,6 @@ const SEL='.scard,.card,.step,.faq details,.sec h2,.sec .lead,.ph';const SCOPE='
 const tag=root=>{if(!root.querySelectorAll)return;root.querySelectorAll(SEL).forEach(el=>{if(el.classList.contains('rv')||!el.closest(SCOPE)||el.closest('.chat,.hero'))return;const sib=[...el.parentNode.children].filter(c=>c.matches(SEL));el.style.setProperty('--d',Math.min(sib.indexOf(el),6)*90+'ms');el.classList.add('rv');io.observe(el)})};
 tag(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType==1)tag(n.parentNode||n)}))).observe(document.body,{childList:true,subtree:true});})();</script>
 
-<script src="experience.js"></script>
+<script src="experience.js?v=20261107-2"></script>
 </body>
 </html>
